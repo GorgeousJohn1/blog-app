@@ -1,0 +1,16 @@
+.author {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-align: end;
+
+  &__name {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  &__date {
+    color: rgba(0, 0, 0, 0.5);
+  }
+}

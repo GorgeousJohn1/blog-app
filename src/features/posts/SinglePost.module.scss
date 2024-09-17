@@ -1,0 +1,51 @@
+.post {
+  width: 100%;
+  max-width: 59rem;
+  background-color: #ffffff;
+  margin: 1rem;
+  padding: 1rem;
+  padding-bottom: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__header-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.82rem;
+  }
+
+  &__body {
+    overflow-wrap: anywhere;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    color: #1890ff;
+  }
+}
+
+.favorite {
+  display: flex;
+  align-items: center;
+  gap: 0.3125rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+}
