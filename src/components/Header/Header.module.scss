@@ -18,11 +18,24 @@
     justify-content: space-between;
     align-items: center;
     gap: 1.2rem;
-    font-size: 18px;
+    font-size: 1.125rem;
+    font-weight: 400;
 
     &--signUp-link {
       color: #52c41a;
       border: 1px solid #52c41a;
+      border-radius: 5px;
+      padding: 0.625rem 1.125rem;
+    }
+    &--new-article {
+      color: #52c41a;
+      border: 1px solid #52c41a;
+      border-radius: 5px;
+      padding: 0.375rem 0.625rem;
+      font-size: 0.875rem;
+    }
+    &--logout {
+      border: 1px solid;
       border-radius: 5px;
       padding: 0.625rem 1.125rem;
     }

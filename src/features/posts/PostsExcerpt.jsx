@@ -14,10 +14,13 @@ export default function PostsExcerpt({ post = {} }) {
     favorited,
     favoritesCount,
     author,
-    tagList,
+    tagList = [],
   } = post;
 
-  const tags = tagList.map((item) => <Tag key={nanoid()}>{item}</Tag>);
+  let tags;
+  if (tagList && tagList.length) {
+    tags = tagList.map((item) => <Tag key={nanoid()}>{item}</Tag>);
+  }
 
   return (
     <article className={classes.post}>
