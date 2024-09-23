@@ -25,8 +25,10 @@ export default function PostForm() {
   const author = post?.article?.author?.username;
 
   useEffect(() => {
-    if (author !== username) navigate('/articles', { replace: true });
-    if (isEdit) form.setFieldsValue({ ...post?.article });
+    if (isEdit) {
+      if (author !== username) navigate('/articles', { replace: true });
+      form.setFieldsValue({ ...post?.article });
+    }
   }, [form, isEdit, post?.article, author, username, navigate]);
 
   const [createPost] = useCreatePostMutation();
