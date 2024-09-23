@@ -1,8 +1,10 @@
-import { Alert, Spin, Tag } from 'antd';
-import { useParams } from 'react-router-dom';
+import { Alert, Spin, Tag, Button, Popconfirm, message } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
+import { selectUser } from '../users/userSlice';
 
-import { useGetSinglePostQuery } from '../api/apiSlice';
+import { useGetSinglePostQuery, useDeletePostMutation } from '../api/apiSlice';
 
 import Author from '../../components/Author/Author';
 import classes from './SinglePost.module.scss';
@@ -10,6 +12,9 @@ import '../../../public/markdown.css';
 
 export default function SinglePostPage() {
   const { slug } = useParams();
+  const currentUser = useSelector(selectUser).username;
+  const navigate = useNavigate();
+
   const {
     data: singlePost,
     isLoading,
@@ -17,6 +22,19 @@ export default function SinglePostPage() {
     isError,
     error,
   } = useGetSinglePostQuery(slug);
+
+  const [deletePost] = useDeletePostMutation();
+
+  const onDeletePost = async () => {
+    try {
+      await deletePost(slug).unwrap();
+
+      message.success('Your post was deleted successfully');
+      navigate('/articles');
+    } catch (err) {
+      message.warning('Something went wrong!');
+    }
+  };
 
   if (isLoading) return <Spin />;
 
@@ -43,6 +61,8 @@ export default function SinglePostPage() {
     } = singlePost.article;
 
     const tags = tagList.map((item) => <Tag key={item}>{item}</Tag>);
+
+    const editable = currentUser === author.username;
 
     return (
       <article className={classes.post}>
@@ -73,7 +93,35 @@ export default function SinglePostPage() {
           <Author author={author} createdAt={createdAt} />
         </div>
         <div className={classes.tags}>{tags}</div>
-        <p className={classes.description}>{description}</p>
+        <div className={classes['with-description']}>
+          <p className={classes.description}>{description}</p>
+          {editable ? (
+            <div className={classes.buttons}>
+              <Popconfirm
+                description="Are you sure to delete this article?"
+                onConfirm={onDeletePost}
+                onCancel={() => {}}
+                okText="Yes"
+                cancelText="No"
+                placement="rightTop"
+              >
+                <Button danger size="large">
+                  Delete
+                </Button>
+              </Popconfirm>
+              <Button
+                style={{
+                  color: 'rgba(82, 196, 26, 1)',
+                  borderColor: 'rgba(82, 196, 26, 1)',
+                }}
+                size="large"
+                onClick={() => navigate(`/articles/${slug}/edit`)}
+              >
+                Edit
+              </Button>
+            </div>
+          ) : null}
+        </div>
         <ReactMarkdown className="markdown-body">{body}</ReactMarkdown>
       </article>
     );

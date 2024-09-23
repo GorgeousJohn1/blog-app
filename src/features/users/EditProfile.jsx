@@ -5,7 +5,7 @@ import { Form, Input, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useEditUserMutation } from '../api/apiSlice';
 import { updateUserCredentials, selectUser } from './userSlice';
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../../components/SubmitButton';
 import classes from './form-container.module.scss';
 
 export default function EditProfile() {
@@ -29,7 +29,7 @@ export default function EditProfile() {
 
   useEffect(() => {
     form.setFieldsValue({ ...user });
-  }, [form, user]);
+  }, [form, navigate, user]);
 
   return (
     <div className={classes['form-container']}>

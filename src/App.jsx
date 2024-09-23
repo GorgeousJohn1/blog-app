@@ -10,6 +10,8 @@ import SinglePostPage from './features/posts/SinglePostPage';
 import SignIn from './features/users/SignIn';
 import SignUp from './features/users/SignUp';
 import Profile from './features/users/EditProfile';
+import PostForm from './features/posts/PostForm';
+import PrivateRoute from './hoc/PrivateRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,10 +30,16 @@ function App() {
         <Route path="articles">
           <Route index element={<PostsList />} />
           <Route path=":slug" element={<SinglePostPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path=":slug/edit" element={<PostForm />} />
+          </Route>
         </Route>
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />
-        <Route path="profile" element={<Profile />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="new-article" element={<PostForm />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="articles" replace />} />
         <Route path="" element={<Navigate to="articles" replace />} />

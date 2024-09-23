@@ -1,17 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Input, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useLogInUserMutation } from '../api/apiSlice';
 import { updateUserCredentials } from './userSlice';
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../../components/SubmitButton';
 import classes from './form-container.module.scss';
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const [form] = useForm();
   const [logInUser] = useLogInUserMutation();
+  const from = location.state?.from?.pathname || '/articles';
 
   const onFinish = async (values) => {
     try {
@@ -19,8 +21,7 @@ export default function SignIn() {
       localStorage.setItem('token', newUser.token);
       dispatch(updateUserCredentials(newUser));
       message.success('Success!');
-
-      navigate('/articles');
+      navigate(from, { replace: true });
     } catch (err) {
       if (err.status === 422) message.warning('Email or password is invalid!');
     }

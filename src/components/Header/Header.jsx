@@ -1,16 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { selectUser, userLoggedOut } from '../../features/users/userSlice';
 import Author from '../Author/Author';
 import classes from './Header.module.scss';
 
 export default function Header() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   const logOut = () => {
     localStorage.removeItem('token');
     dispatch(userLoggedOut());
+    navigate('/articles');
   };
 
   return (

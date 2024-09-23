@@ -4,7 +4,7 @@ import { Checkbox, Form, Input, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useRegisterNewUserMutation } from '../api/apiSlice';
 import { updateUserCredentials } from './userSlice';
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../../components/SubmitButton';
 import classes from './form-container.module.scss';
 
 export default function SignUp() {

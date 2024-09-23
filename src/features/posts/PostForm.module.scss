@@ -1,6 +1,5 @@
 .form-container {
-  max-width: 24rem;
-  min-width: 20rem;
+  width: 58rem;
   padding: 3rem 2rem;
   background-color: white;
   border: 1px solid rgba(217, 217, 217, 1);
@@ -13,11 +12,4 @@
   font-weight: 500;
   text-align: center;
   margin-bottom: 1.25rem;
-}
-
-.form-link {
-  color: #1890ff;
-  &:hover {
-    color: #366eff;
-  }
 }

@@ -65,6 +65,38 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    createPost: builder.mutation({
+      query: (newPost) => ({
+        url: '/articles',
+        method: 'POST',
+        body: { article: { ...newPost } },
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Posts'],
+    }),
+    editPost: builder.mutation({
+      query: (args) => ({
+        url: `/articles/${args.slug}`,
+        method: 'PUT',
+        body: { article: { ...args.editedPost } },
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Posts', 'SinglePost'],
+    }),
+    deletePost: builder.mutation({
+      query: (slug) => ({
+        url: `/articles/${slug}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Posts', 'SinglePost'],
+    }),
   }),
 });
 
@@ -75,4 +107,7 @@ export const {
   useRegisterNewUserMutation,
   useLogInUserMutation,
   useEditUserMutation,
+  useCreatePostMutation,
+  useEditPostMutation,
+  useDeletePostMutation,
 } = apiSlice;
