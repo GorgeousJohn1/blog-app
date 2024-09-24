@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { Tag } from 'antd';
+import PropTypes from 'prop-types';
+import { Tag, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { nanoid } from '@reduxjs/toolkit';
-import PropTypes from 'prop-types';
+import { useLikePostMutation, useUnLikePostMutation } from '../api/apiSlice';
 import classes from './PostsExcerpt.module.scss';
 import Author from '../../components/Author/Author';
 
 export default function PostsExcerpt({ post = {} }) {
   const {
+    slug,
     title,
     description,
     createdAt,
@@ -17,10 +19,22 @@ export default function PostsExcerpt({ post = {} }) {
     tagList = [],
   } = post;
 
+  const [likePost] = useLikePostMutation();
+  const [unLikePost] = useUnLikePostMutation();
+
   let tags;
   if (tagList && tagList.length) {
     tags = tagList.map((item) => <Tag key={nanoid()}>{item}</Tag>);
   }
+
+  const onFavorite = async () => {
+    try {
+      if (favorited) await unLikePost(slug).unwrap();
+      else await likePost(slug).unwrap();
+    } catch {
+      message.warning('Something went wrong!');
+    }
+  };
 
   return (
     <article className={classes.post}>
@@ -30,7 +44,11 @@ export default function PostsExcerpt({ post = {} }) {
             <h2 className={classes.post__title}>{title}</h2>
           </Link>
 
-          <button className={classes.favorite} type="button">
+          <button
+            className={classes.favorite}
+            type="button"
+            onClick={onFavorite}
+          >
             <svg
               width="20"
               height="16"

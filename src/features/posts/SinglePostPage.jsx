@@ -4,7 +4,12 @@ import { useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { selectUser } from '../users/userSlice';
 
-import { useGetSinglePostQuery, useDeletePostMutation } from '../api/apiSlice';
+import {
+  useGetSinglePostQuery,
+  useDeletePostMutation,
+  useLikePostMutation,
+  useUnLikePostMutation,
+} from '../api/apiSlice';
 
 import Author from '../../components/Author/Author';
 import classes from './SinglePost.module.scss';
@@ -24,6 +29,8 @@ export default function SinglePostPage() {
   } = useGetSinglePostQuery(slug);
 
   const [deletePost] = useDeletePostMutation();
+  const [likePost] = useLikePostMutation();
+  const [unLikePost] = useUnLikePostMutation();
 
   const onDeletePost = async () => {
     try {
@@ -32,6 +39,15 @@ export default function SinglePostPage() {
       message.success('Your post was deleted successfully');
       navigate('/articles');
     } catch (err) {
+      message.warning('Something went wrong!');
+    }
+  };
+
+  const onFavorite = async (favorited) => {
+    try {
+      if (favorited) await unLikePost(slug).unwrap();
+      else await likePost(slug).unwrap();
+    } catch {
       message.warning('Something went wrong!');
     }
   };
@@ -70,7 +86,11 @@ export default function SinglePostPage() {
           <div className={classes['post__header-left']}>
             <h2 className={classes.post__title}>{title}</h2>
 
-            <button className={classes.favorite} type="button">
+            <button
+              className={classes.favorite}
+              type="button"
+              onClick={() => onFavorite(favorited)}
+            >
               <svg
                 width="20"
                 height="16"

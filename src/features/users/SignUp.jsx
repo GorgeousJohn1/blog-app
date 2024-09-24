@@ -59,6 +59,7 @@ export default function SignUp() {
               message: 'Your username must be 20 characters or less!',
             },
             { min: 3, message: 'Your username must be at least 3 characters!' },
+            { whitespace: true, message: 'Whitespaces are not allowed' },
           ]}
           validateTrigger="onBlur"
         >
@@ -89,6 +90,7 @@ export default function SignUp() {
               required: true,
               message: 'Please input your password!',
             },
+            { whitespace: true, message: 'Whitespaces are not allowed' },
           ]}
           validateTrigger="onBlur"
         >

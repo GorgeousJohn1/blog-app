@@ -80,6 +80,7 @@ export default function PostForm() {
               required: true,
               message: 'Title is required!',
             },
+            { whitespace: true, message: 'Whitespaces are not allowed' },
           ]}
           validateTrigger="onBlur"
         >
@@ -94,6 +95,7 @@ export default function PostForm() {
               required: true,
               message: 'Description is required!',
             },
+            { whitespace: true, message: 'Whitespaces are not allowed' },
           ]}
           validateTrigger="onBlur"
         >
@@ -109,6 +111,7 @@ export default function PostForm() {
               required: true,
               message: 'Please fill this field!',
             },
+            { whitespace: true, message: 'Whitespaces are not allowed' },
           ]}
           validateTrigger="onBlur"
         >

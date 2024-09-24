@@ -29,7 +29,7 @@ export default function SignIn() {
 
   return (
     <div className={classes['form-container']}>
-      <h2 className={classes['form-header']}>Create a new account</h2>
+      <h2 className={classes['form-header']}>Sign In</h2>
       <Form
         name="sign-in"
         form={form}
@@ -65,10 +65,11 @@ export default function SignIn() {
               required: true,
               message: 'Please input your password!',
             },
+            { whitespace: true, message: 'Whitespaces are not allowed' },
           ]}
           validateTrigger="onBlur"
         >
-          <Input.Password placeholder="Password" />
+          <Input.Password placeholder="Password" autoComplete="on" />
         </Form.Item>
 
         <Form.Item style={{ marginBottom: '0.5rem' }}>

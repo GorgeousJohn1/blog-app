@@ -97,6 +97,26 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Posts', 'SinglePost'],
     }),
+    likePost: builder.mutation({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Posts', 'SinglePost'],
+    }),
+    unLikePost: builder.mutation({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Posts', 'SinglePost'],
+    }),
   }),
 });
 
@@ -110,4 +130,6 @@ export const {
   useCreatePostMutation,
   useEditPostMutation,
   useDeletePostMutation,
+  useLikePostMutation,
+  useUnLikePostMutation,
 } = apiSlice;
