@@ -1,13 +1,14 @@
 import { Alert, List } from 'antd';
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useGetPostsQuery } from '../api/apiSlice';
 
 import PostsExcerpt from './PostsExcerpt';
 
 export default function PostsList() {
-  const [pageQuery, setPageQuery] = useState(1);
-  const { data, isSuccess, isLoading, isError, error } =
-    useGetPostsQuery(pageQuery);
+  const [pageQuery, setPageQuery] = useSearchParams({ page: '1' });
+  const { data, isSuccess, isLoading, isError, error } = useGetPostsQuery(
+    Number(pageQuery.get('page'))
+  );
 
   if (isError)
     return (
@@ -27,13 +28,13 @@ export default function PostsList() {
       dataSource={isSuccess ? data.articles : []}
       loading={isLoading}
       pagination={{
-        current: pageQuery,
+        current: Number(pageQuery.get('page')),
         align: 'center',
         pageSize: 5,
         showSizeChanger: false,
         total: isSuccess && data.articlesCount,
-        onChange: (page) => {
-          setPageQuery(page);
+        onChange: (p) => {
+          setPageQuery({ page: p.toString() });
         },
       }}
       renderItem={(item) => (
